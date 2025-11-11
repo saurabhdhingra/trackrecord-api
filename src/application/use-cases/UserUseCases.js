@@ -1,6 +1,6 @@
 import { Measurement } from '../../domain/user.entity';
 
-// Default exercises to populate the user's initial list
+
 const INITIAL_EXERCISES = [
     { name: 'Barbell Bench Press', muscleGroup: 'Chest' },
     { name: 'Lateral Raise (Dumbbells)', muscleGroup: 'Shoulders' },
@@ -15,7 +15,7 @@ class UserUseCases {
         this.workoutRepository = workoutRepository;
     }
 
-    // --- User Profile & Measurements ---
+    // User management
 
     async createUser(userId, email, birthDate) {
         // 1. Check if user already exists
@@ -24,7 +24,6 @@ class UserUseCases {
             throw new Error('User already exists.');
         }
 
-        // 2. Create the initial user profile
         const userData = {
             _id: userId,
             email,
@@ -32,7 +31,6 @@ class UserUseCases {
         };
         const newUser = await this.userRepository.create(userData);
 
-        // 3. Initialize the user's unique exercise list (MANDATORY per request)
         await this.workoutRepository.createExerciseList(userId, INITIAL_EXERCISES);
 
         return newUser;
@@ -59,7 +57,7 @@ class UserUseCases {
         return this.userRepository.findById(userId);
     }
 
-    // --- Exercise List Management ---
+    // Exercise List Management 
 
     async getExerciseList(userId) {
         const list = await this.workoutRepository.getExerciseList(userId);

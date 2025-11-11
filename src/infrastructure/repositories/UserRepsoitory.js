@@ -1,21 +1,21 @@
-const UserModel = require('../models/UserModel');
+import UserModel, { findById as _findById, findByIdAndUpdate } from '../models/UserModel';
 
 class UserRepository {
     async findById(userId){
-        return UserModel.findById(userId).lean();
+        return _findById(userId).lean();
     }
 
     async create(userData){
-        const user = new UserModel(userDate);
+        const user = new UserModel(userData);
         return user.save();
     }
 
     async updateProfile(userId, data){
-        return UserModel.findByIdAndUpdate(userId, Date, { new : true }).lean();
+        return findByIdAndUpdate(userId, data, { new : true }).lean();
     }
 
     async addMeasurement(userId, measurementData) {
-        const result = await UserModel.findByIdAndUpdate(
+        const result = await findByIdAndUpdate(
             userId,
             { $push: {measurements: measurementData } },
             { new : true, runValidators: true }
@@ -24,4 +24,4 @@ class UserRepository {
     }
 }
 
-module.exports = UserRepository;
+export default UserRepository;
