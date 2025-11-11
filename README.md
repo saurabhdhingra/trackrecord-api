@@ -100,7 +100,7 @@ cp ./.env.example ./.env
 
 Edit the newly created .env file:
 
-# .env file content
+## .env file content
 ```
 MONGO_URI=mongodb+srv://<username>:<password>@clustername.mongodb.net/<database>?retryWrites=true&w=majority
 PORT=3000
